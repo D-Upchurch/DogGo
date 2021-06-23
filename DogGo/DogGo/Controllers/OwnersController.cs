@@ -54,19 +54,19 @@ namespace DogGo.Controllers
         }
 
 
-        // GET: Owners/Create
-        public ActionResult Create()
-        {
-            List<Neighborhood> neighborhoods = _neighborhoodRepo.GetAll();
+       // GET: Owners/Create
+public ActionResult Create()
+{
+    List<Neighborhood> neighborhoods = _neighborhoodRepo.GetAll();
 
-            OwnerFormViewModel vm = new OwnerFormViewModel()
-            {
-                Owner = new Owner(),
-                Neighborhoods = neighborhoods
-            };
+    OwnerFormViewModel vm = new OwnerFormViewModel()
+    {
+        Owner = new Owner(),
+        Neighborhoods = neighborhoods
+    };
 
-            return View(vm);
-        }
+    return View(vm);
+}
 
 
         // POST: OwnersController/Create
@@ -89,14 +89,15 @@ namespace DogGo.Controllers
         // GET: Owners/Edit/5
         public ActionResult Edit(int id)
         {
-            Owner owner = _ownerRepo.GetOwnerById(id);
+            List<Neighborhood> neighborhoods = _neighborhoodRepo.GetAll();
 
-            if (owner == null)
+            OwnerFormViewModel vm = new OwnerFormViewModel()
             {
-                return NotFound();
-            }
+                Owner = _ownerRepo.GetOwnerById(id),
+                Neighborhoods = neighborhoods
+            };
 
-            return View(owner);
+            return View(vm);
         }
 
 
