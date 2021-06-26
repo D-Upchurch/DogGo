@@ -201,5 +201,52 @@ namespace DogGo.Repositories
             }
         }
 
+        public void UpdateDog(Dog dog)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                    UPDATE Dog
+                    SET
+                        [Name] = @name,
+                        OwnerId = @ownerId,
+                        Breed = @breed,
+                        Notes = @notes,
+                        ImageUrl = @imageUrl
+                    WHERE Id = @id
+                    ";
+
+                    cmd.Parameters.AddWithValue("@name", dog.Name);
+                    cmd.Parameters.AddWithValue("@ownerId", dog.OwnerId);
+                    cmd.Parameters.AddWithValue("@breed", dog.Breed);
+                    cmd.Parameters.AddWithValue("@id", dog.Id);
+
+                    // nullable columns
+                    if (dog.Notes == null)
+                    {
+                        cmd.Parameters.AddWithValue("@notes", DBNull.Value);
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@notes", dog.Notes);
+                    }
+
+                    if (dog.ImageUrl == null)
+                    {
+                        cmd.Parameters.AddWithValue("@imageUrl", DBNull.Value);
+                    }
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@imageUrl", dog.ImageUrl);
+                    }
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
     }
 }
