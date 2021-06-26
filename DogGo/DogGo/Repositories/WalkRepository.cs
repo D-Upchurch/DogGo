@@ -28,10 +28,12 @@ namespace DogGo.Repositories
 
         public List<Walk> GetWalksByWalkerId()
         {
-           using ()
-            {
-                using (SqlCommand cmd = Connection.CreateCommand())
-            }
+            //using ()
+            // {
+            //     using (SqlCommand cmd = Connection.CreateCommand())
+            // }
+            List<Walk> Walks = new List<Walk>();
+            return Walks;
         }
     }
 }
